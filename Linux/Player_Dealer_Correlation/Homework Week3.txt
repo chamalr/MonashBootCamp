@@ -1,0 +1,114 @@
+Homework Week 3.
+
+Step 1.
+1.	sysadmin@UbuntuDesktop:/03-student$ mkdir Lucky_Duck_Investigations
+sysadmin@UbuntuDesktop:/03-student$ ls
+day1  day2  day3  Lucky_Duck_Investigations
+2.	sysadmin@UbuntuDesktop:/03-student/Lucky_Duck_Investigations$ mkdir Roulette_Loss_Investigation
+sysadmin@UbuntuDesktop:/03-student/Lucky_Duck_Investigations$ ls
+Roulette_Loss_Investigation
+3.	sysadmin@UbuntuDesktop:/03-student/Lucky_Duck_Investigations$ mkdir Player_Analysis
+sysadmin@UbuntuDesktop:/03-student/Lucky_Duck_Investigations$ mkdir Dealer_Analysis
+sysadmin@UbuntuDesktop:/03-student/Lucky_Duck_Investigations$ mkdir Player_Dealer_Correlation
+sysadmin@UbuntuDesktop:/03-student/Lucky_Duck_Investigations$ ls
+Dealer_Analysis  Player_Analysis  Player_Dealer_Correlation  Roulette_Loss_Investigation
+4.	sysadmin@UbuntuDesktop:/03-student/Lucky_Duck_Investigations/Player_Analysis$ touch Notes_Player_Analysis
+$ touch Notes_Dealer_Analysis
+$ touch Notes_Player_Dealer_Correction
+
+Step 2.
+1.wget "https://tinyurl.com/3-HW-setup-evidence" && chmod +x ./3-HW-setup-evidence && ./3-HW-setup-evidence
+2. $ mv 0310_Dealer_schedule 0312_Dealer_schedule 0315_Dealer_schedule ../Dealer_Analysis/
+    $ mv 0310_win_loss_player_data 0312_win_loss_player_data 0315_win_loss_player_data ../Player_Analysis/
+
+
+
+Step 3.- Complete the player analysis. 
+2. /03-student/Lucky_Duck_Investigations/Player_Analysis$ grep '\-$*' *
+3. $ grep '\-$*' * > Roulette_Losses
+4. sysadmin@UbuntuDesktop:/03-student/Lucky_Duck_Investigations/Player_Analysis$ more Roulette_Losses
+
+The time of the losses occurred on each day
+$ awk '{print $1,$2}' Roulette_Losses > Notes_Player_Analysis
+If there is a certain player that was playing during each of those times
+Save this below #!/bin/bash content in bash script file and run as below give the output of most frequent word of the file.
+
+sysadmin@UbuntuDesktop:/03-student/Lucky_Duck_Investigations/Player_Analysis$ bash Most_Seen_Player_name.sh 
+output is 13 Mylie Schmidt.
+
+The total count of times this player was playing
+
+According the bash output its Mylie Schmidt is playing in 13 times.
+
+Step 3.-Complete the dealer analysis. 
+3. each day and time that you determined losses occurred. I wrote a script call “output.sh” and ran the “output.sh” and created the Dealers_working_during_losses file. You can find the date, Time, am/pm, first name of the roulette dealer and the last name of the roulette dealer in Dealers_working_during_losses file. 
+
+Then I wrote a script to find out the dealer who is working in a specific date and time. But you need to pass the argument like below.
+
+$ bash roulette_dealer_finder_by_time.sh 0312 04 pm the out put for this is Cleveland Hanna.
+
+According to the question example the player is working on March 10 at 2 pm is:
+$ bash roulette_dealer_finder_by_time.sh 0310 02 pm
+Billy Jones (the answer is Billy Jones). 
+ 
+4.
+Then from the “Dealers_working_during_losses” file, I cut out the Dealers names 
+From the following command. 
+$ awk '{print $4,$5}' Dealers_working_during_losses &> Dealer_names
+
+
+
+5.	Now I have dealer’s data in Dealer_names file. 
+
+To find the primary dealer working at that times where losses occurred, I wrote a bash script like below name Primary_dealer_working_at_that_time.sh after running this script I get the output as 15 times and the Dealer is Billy Jones.
+
+sysadmin@UbuntuDesktop:/03-student/Lucky_Duck_Investigations/Dealer_Analysis$ bash Primary_dealer_working_at_that_time.sh
+     15 Billy Jones
+
+
+6.	Input these sentences to the file “Notes_Player_Dealer_Correction”.
+Used nano editor to write below sentences in to above file.
+
+there is a certain player that was playing during each of the losses occurred, her name is Mylie Schmidt. She was playing in 13 times.
+there is a primary dealer working at the times where losses occurred, his name is Billy Jones. He has seen in 15 times.
+That means Player Mylie Schmidt and Dealer Billy Jones are doing some scam to the Lucky Duck.
+
+Step 4.
+1.
+I have all the data in “Dealers_working_during_losses” file. The data is like below.
+0310 12:00:00 AM Marlene Mcpherson
+0310 01:00:00 AM Saima Mcdermott
+0310 02:00:00 AM Abigale Rich
+
+I wrote a script to find the Roulette Dealer call “roulette_dealer_finder_by_time.sh”.
+I can run above file using below command.
+
+$ bash roulette_dealer_finder_by_time.sh 0312 05 pm ( “0312” “05” “pm” are the three arguments)
+Then the output comes as below.
+Rahima Figueroa
+
+The bash command are as below for the  “roulette_dealer_finder_by_time.sh” file
+
+#!/bin/bash
+grep -w $1 Dealers_working_during_losses > a.txt
+grep -w $2 a.txt > b.txt
+grep -wi $3 b.txt | awk '{print $4,$5}' 
+rm a.txt b.txt
+
+2. 
+I have test the  “roulette_dealer_finder_by_time.sh” file and its giving me the correct output.
+
+For bonus Question. 
+sysadmin@UbuntuDesktop:/03-student/Lucky_Duck_Investigations/Dealer_Analysis$ useful data is in all the three files.
+1.	0310_Dealer_schedule
+2.	0312_Dealer_schedule
+3.	0315_Dealer_schedule
+
+I wrote a script call bonus.sh to get the output.
+When you pass the parameters to bonus file you need pass as below. 
+Specific date: 0310, 0312 or 0315
+Specific time: 04 pm, 06 PM, 05 Am, or 03 am (am, pm are not case sensitive)
+Casino game being played: Black, Roulette or Texas. (The fourth parameter is case sensitive) As an example, you can pass parameters as “Bla”, “Rou” or “Tex” even. 
+
+	$ bash bonus.sh 0315 06 pm Texas or $ bash bonus.sh 0310 06 am Black these two commands give me the dealer names as “John-James Hayward” and ”Evalyn Howell” respectively. 
+
